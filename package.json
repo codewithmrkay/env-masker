@@ -3,6 +3,7 @@
   "displayName": "Env Masker",
   "description": "Mask secrets in .env files while streaming",
   "version": "0.0.1",
+  "publisher": "karankadamjaihind",
   "repository": {
     "type": "git",
     "url": "https://github.com/codewithmrkay/env-masker.git"
