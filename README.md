@@ -29,8 +29,27 @@
 ## 📸 Screenshot
 
 ### 🔻 Disabled View  
-![Disabled View](https://raw.githubusercontent.com/codewithmrkay/env-masker/main/disable.jpeg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/codewithmrkay/env-masker/main/disable.jpg" alt="Disabled View" width="600" />
+</p>
 
 ### ✅ Enabled View  
-![Enabled View](https://raw.githubusercontent.com/codewithmrkay/env-masker/main/enable.jpeg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/codewithmrkay/env-masker/main/enable.jpg" alt="Enabled View" width="600" />
+</p>
+
+---
+## 📞Contact
+
+<p align="center"> 
+  <a href="mailto:kkadam58707@gmail.com" target="_blank"> 
+    <img src="https://img.shields.io/badge/Email-kkadam58707@gmail.com-800080?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"> 
+  </a> 
+ <a href="https://www.youtube.com/@Code_Gully" target="_blank"> 
+  <img src="https://img.shields.io/badge/YouTube-Code_Gully-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"> 
+ </a> 
+ <a href="https://www.linkedin.com/in/karan-kadam-777621366/" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-Karan%20Kadam-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"> 
+ </a> 
+</p>
 
