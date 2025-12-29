@@ -25,15 +25,21 @@ function activate(context) {
     const lines = text.split('\n');
 
     lines.forEach((line, lineIndex) => {
-      const match = line.match(/^([\w.-]+)\s*=\s*(.+)$/);
+      // Updated regex to match commented lines as well
+      // Supports: KEY=value, #KEY=value, # KEY=value, //KEY=value, // KEY=value
+      const match = line.match(/^\s*(#|\/\/)?\s*([\w.-]+)\s*=\s*(.+)$/);
+      
       if (match) {
-        const key = match[1];
-        const value = match[2];
+        const commentPrefix = match[1] || '';
+        const key = match[2];
+        const value = match[3];
 
-        const startPos = new vscode.Position(lineIndex, key.length + 1);
+        // Calculate the position after the '=' sign
+        const equalSignIndex = line.indexOf('=');
+        const startPos = new vscode.Position(lineIndex, equalSignIndex + 1);
         const endPos = new vscode.Position(lineIndex, line.length);
 
-        const maskedValue = '*'.repeat(value.length);
+        const maskedValue = '*'.repeat(value.trim().length);
 
         decorations.push({
           range: new vscode.Range(startPos, endPos),
@@ -55,7 +61,16 @@ function activate(context) {
     vscode.window.visibleTextEditors.forEach(maskSecrets);
   }
 
-  // 🆕 Toggle Command
+  // Apply masking immediately when extension loads
+  // This reduces the "flash" of unmasked content
+  function applyInitialMasking() {
+    if (vscode.window.activeTextEditor) {
+      maskSecrets(vscode.window.activeTextEditor);
+    }
+    vscode.window.visibleTextEditors.forEach(maskSecrets);
+  }
+
+  // Toggle Command
   const toggleMaskingCommand = vscode.commands.registerCommand('env-masker.toggleMasking', () => {
     isMaskingEnabled = !isMaskingEnabled;
     vscode.window.showInformationMessage(
@@ -66,23 +81,37 @@ function activate(context) {
 
   context.subscriptions.push(toggleMaskingCommand);
 
-  vscode.window.onDidChangeActiveTextEditor(editor => {
-    if (editor) maskSecrets(editor);
-  });
+  // Event listeners
+  context.subscriptions.push(
+    vscode.window.onDidChangeActiveTextEditor(editor => {
+      if (editor) maskSecrets(editor);
+    })
+  );
 
-  vscode.workspace.onDidOpenTextDocument(document => {
-    const editor = vscode.window.visibleTextEditors.find(e => e.document === document);
-    if (editor) maskSecrets(editor);
-  });
+  context.subscriptions.push(
+    vscode.workspace.onDidOpenTextDocument(document => {
+      const editor = vscode.window.visibleTextEditors.find(e => e.document === document);
+      if (editor) {
+        // Apply masking immediately without delay
+        maskSecrets(editor);
+      }
+    })
+  );
 
-  vscode.workspace.onDidChangeTextDocument(event => {
-    const editor = vscode.window.visibleTextEditors.find(e => e.document === event.document);
-    if (editor) maskSecrets(editor);
-  });
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeTextDocument(event => {
+      const editor = vscode.window.visibleTextEditors.find(e => e.document === event.document);
+      if (editor) maskSecrets(editor);
+    })
+  );
 
-  if (vscode.window.activeTextEditor) {
-    maskSecrets(vscode.window.activeTextEditor);
-  }
+  // Apply masking immediately on activation (fixes flash issue)
+  applyInitialMasking();
+  
+  // Additional safeguard: reapply after a tiny delay to catch any race conditions
+  setTimeout(() => {
+    updateAllVisibleEditors();
+  }, 50);
 }
 
 function deactivate() {}
