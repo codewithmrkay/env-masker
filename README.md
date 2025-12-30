@@ -12,6 +12,7 @@
 ## ✨ Features
 
 - 🔒 Automatically masks values in `.env` files (e.g., `API_KEY=********`)
+- 🔥 Supports Commet Out Values (e.g.,`#API_KEY=********`)
 - 👁️ Toggle masking on/off with a simple button
 - 📂 Works with `.env`, `.env.local`, `.env.production`, etc.
 - ⚡ Lightweight and easy to use
@@ -23,6 +24,7 @@
 1. Open any `.env` or `.env.*` file.
 2. The extension will automatically mask the secret values.
 3. Use the **Toggle Masking** button in the top-right of the editor to show or hide actual values.
+4. Note : Please Close All .env files before exit Vs-Code . use button --> ❌Close All Env
 
 ---
 
