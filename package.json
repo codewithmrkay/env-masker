@@ -2,7 +2,7 @@
   "name": "env-masker",
   "displayName": "Env Masker",
   "description": "Mask secrets in .env files while streaming",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "publisher": "karankadamjaihind",
   "icon": "icon.png",
   "repository": {
@@ -23,20 +23,29 @@
   "contributes": {
     "commands": [
       {
-        "command": "env-masker.helloWorld",
-        "title": "Say Hello from Env Masker"
+        "command": "env-masker.toggleMasking",
+        "title": "🔐Toggle Masking",
+        "category": "Env Masker"
       },
       {
-        "command": "env-masker.toggleMasking",
-        "title": "🔐 Toggle Env Masking"
+        "command": "env-masker.closeAllEnv",
+        "title": "❌Close All .env",
+        "category": "Env Masker"
       }
     ],
     "menus": {
       "editor/title": [
         {
           "command": "env-masker.toggleMasking",
-          "when": "resourceFilename =~ /^\\.env/",
-          "group": "navigation"
+          "when": "resourceFilename =~ /\\.env/",
+          "group": "navigation",
+          "alt": "env-masker.toggleMasking"
+        },
+        {
+          "command": "env-masker.closeAllEnv",
+          "when": "resourceFilename =~ /\\.env/",
+          "group": "navigation",
+          "alt": "env-masker.closeAllEnv"
         }
       ]
     }
